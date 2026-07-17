@@ -3,16 +3,28 @@ name: generate-ascii-artworks-workflow
 on: push
 
 jobs:
-  ascii_job:
+  build_job_1:
     runs-on: ubuntu-latest
     steps:
-    - name: checkout repo
-      uses: actions/checkout@v7
+      - name: Install Cowsay Program
+        run: sudo apt-get install cowsay -y
+      - name: Execute Cowsay Command
+        run: cowsay -f dragon "Run for cover, I am a DRAGON... RAWR" >> dragon.txt
+      - name: Sleep for 30 seconds
+        run: sleep 30
 
-    - name: list files
-      run: ls -ltra
+  test_job_2:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Sleep for 10 seconds
+        run: sleep 10
+      - name: Test File Exists
+        run: grep -i "dragon" dragon.txt
 
-    - name: executing shell script
-      run: |
-        chmod +x .github/workflows/ascii-script.sh
-        ./.github/workflows/ascii-script.sh
+  deploy_job_3:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Read File
+        run: cat dragon.txt
+      - name: Deploy
+        run: echo "Deploying..."
