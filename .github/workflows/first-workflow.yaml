@@ -16,7 +16,6 @@ jobs:
            cat README.md
 
     - name: generate ASCII art work
-      uses: gr2m/cowsay-action@v1.0.2
       run: cowsay -f dragon "Run for cover, I am a DRAGON....RAWR" >> dragon.txt
 
     # - name: list files
