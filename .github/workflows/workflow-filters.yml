@@ -1,0 +1,29 @@
+name: Workflow Filters and Activities
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '*/59 * * * *'
+  push:
+    branches:
+      - main             # Run on pushes to main branch
+      - '!feature/*'     # Ignore all branches that start with "feature/"
+    # branches-ignore:
+    #   - 'feature/*'     # Ignore all branches that start with "feature/"
+    #   - 'test/**'       # Ignore all branches that start with "test/ like test/abc, test/xyz, etc."
+  pull_request:
+    types:          # Trigger only for opened and closed PRs on main
+      - opened
+      - closed
+    branches:
+      - main        # Trigger only for PRs targeting the main branch
+    paths-ignore:   
+      - README.md   # Skip runs when only README.md changes
+
+jobs:
+  hello:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print event
+        run: |
+          echo "This job ran for event: ${{ github.event_name }}"
